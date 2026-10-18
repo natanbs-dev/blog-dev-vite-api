@@ -1,0 +1,8 @@
+# /etc/systemd/system/barbosa-backup.service
+[Unit]
+Description=Backup do banco do barbosa.md
+
+[Service]
+Type=oneshot
+User=postgres
+ExecStart=/opt/barbosa-api/deploy/backup.sh

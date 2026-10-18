@@ -1,0 +1,45 @@
+{
+  "name": "blog-dev-vite-api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "API de contas e comentários do barbosa.md",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "tsx watch --env-file=.env src/server.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node --env-file-if-exists=.env dist/server.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node --env-file-if-exists=.env dist/db/migrate.js",
+    "db:migrate:dev": "tsx --env-file=.env src/db/migrate.ts",
+    "admin:promote": "node --env-file-if-exists=.env dist/scripts/promote.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.5",
+    "@hono/zod-validator": "^0.9.1",
+    "@node-rs/argon2": "^2.2.2",
+    "drizzle-orm": "^0.45.4",
+    "hono": "^4.13.13",
+    "nodemailer": "^10.1.6",
+    "pino": "^10.4.0",
+    "postgres": "^3.4.9",
+    "rate-limiter-flexible": "^11.2.3",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@testcontainers/postgresql": "^12.2.1",
+    "@types/node": "^24.19.2",
+    "@types/nodemailer": "^8.0.2",
+    "drizzle-kit": "^0.31.11",
+    "oxlint": "^1.88.0",
+    "pino-pretty": "^13.2.0",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.2",
+    "vitest": "^5.0.5"
+  }
+}

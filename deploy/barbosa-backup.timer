@@ -1,0 +1,10 @@
+# /etc/systemd/system/barbosa-backup.timer
+[Unit]
+Description=Backup diário do banco do barbosa.md
+
+[Timer]
+OnCalendar=*-*-* 04:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
