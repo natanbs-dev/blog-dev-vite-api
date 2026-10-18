@@ -1,0 +1,37 @@
+# /etc/systemd/system/barbosa-api.service
+[Unit]
+Description=barbosa.md API (contas e comentários)
+After=network-online.target postgresql.service
+Wants=network-online.target
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=barbosa-api
+Group=barbosa-api
+WorkingDirectory=/opt/barbosa-api
+EnvironmentFile=/etc/barbosa-api.env
+# migrações pendentes rodam antes de cada partida (deploy = rsync + restart)
+ExecStartPre=/usr/bin/node dist/db/migrate.js
+ExecStart=/usr/bin/node --max-old-space-size=256 dist/server.js
+Restart=always
+RestartSec=3
+# memória: a API usa ~100 MB; o teto protege o resto do notebook
+MemoryMax=400M
+
+# isolamento
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+CapabilityBoundingSet=
+
+[Install]
+WantedBy=multi-user.target

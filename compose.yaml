@@ -1,0 +1,15 @@
+# Ambiente de desenvolvimento: docker compose up -d
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: barbosa
+      POSTGRES_PASSWORD: barbosa
+      POSTGRES_DB: barbosa
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql]
+  mail:
+    image: axllent/mailpit:v1.27
+    ports: ["127.0.0.1:1025:1025", "127.0.0.1:8025:8025"]
+volumes:
+  pgdata:

@@ -1,0 +1,46 @@
+# ---------- dependências e build ----------
+node_modules/
+dist/
+*.tsbuildinfo
+coverage/
+
+# ---------- segredos (repositório público: NUNCA commitar) ----------
+# Só os exemplos, sem valores reais, entram no git.
+.env
+.env.*
+!.env.example
+*.env
+!deploy/barbosa-api.env.example
+*.local
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# ---------- dados do banco ----------
+# Backups trazidos do Arch têm e-mails e hashes de senha dos leitores.
+# (As migrações em drizzle/*.sql NÃO são ignoradas.)
+backups/
+*.dump
+*.dump.tmp
+*.backup
+*.sql.gz
+
+# ---------- logs ----------
+logs/
+*.log
+
+# ---------- SO e editores ----------
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.sw?
+*~
+
+# ---------- Claude Code ----------
+.claude/settings.local.json
