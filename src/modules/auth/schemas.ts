@@ -9,10 +9,15 @@ export const email = z
   .max(254, 'E-mail longo demais')
   .pipe(z.email('E-mail inválido'));
 
+// Mínimo razoável sem exagero: 8+ caracteres com letra, número e caractere especial.
+// O front (blog-dev-vite, src/lib/password.ts) mostra as mesmas regras ao vivo.
 export const password = z
   .string({ error: 'Informe a senha' })
-  .min(10, 'A senha precisa de pelo menos 10 caracteres')
-  .max(128, 'A senha pode ter no máximo 128 caracteres');
+  .refine((p) => [...p].length >= 8, 'A senha precisa de pelo menos 8 caracteres')
+  .refine((p) => p.length <= 128, 'A senha pode ter no máximo 128 caracteres')
+  .refine((p) => /\p{L}/u.test(p), 'Inclua pelo menos uma letra')
+  .refine((p) => /\p{N}/u.test(p), 'Inclua pelo menos um número')
+  .refine((p) => /[^\p{L}\p{N}\s]/u.test(p), 'Inclua pelo menos um caractere especial (! @ # - _ …)');
 
 export const username = z
   .string({ error: 'Informe o nome de usuário' })
