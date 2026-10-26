@@ -33,7 +33,7 @@ HOST=127.0.0.1
 PORT=8787
 LOG_LEVEL=info
 DATABASE_URL=postgres://barbosa:${DBPASS}@127.0.0.1:5432/barbosa
-SITE_URL=https://barbosa-md.pages.dev
+SITE_URL=https://blog-dev-vite.pages.dev
 # o MESMO valor vai no Cloudflare Pages (secret PROXY_SECRET)
 PROXY_SECRET=${SECRET}
 # Brevo: Settings → SMTP & API → SMTP

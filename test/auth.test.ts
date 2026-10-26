@@ -44,6 +44,28 @@ describe('cadastro e confirmação de e-mail', () => {
     expect(Object.keys(res.json.fields).sort()).toEqual(['displayName', 'email', 'password', 'username']);
   });
 
+  it('exige senha com 8+ caracteres, letra, número e caractere especial', async () => {
+    const cases: [string, RegExp][] = [
+      ['a1!b2@c', /8 caracteres/],
+      ['12345678!', /letra/],
+      ['senhasemnum!', /número/],
+      ['senhasem3special', /especial/],
+    ];
+    for (const [password, msg] of cases) {
+      const b = new Browser(ctx, '10.8.0.1');
+      const res = await b.post('/auth/register', { email: 'p@exemplo.com', username: 'pwtest', displayName: 'P', password });
+      expect(res.status, password).toBe(400);
+      expect(res.json.fields.password, password).toMatch(msg);
+    }
+    const ok = await new Browser(ctx, '10.8.0.2').post('/auth/register', {
+      email: 'p@exemplo.com',
+      username: 'pwtest',
+      displayName: 'P',
+      password: 'çafé#2024',
+    });
+    expect(ok.status).toBe(201);
+  });
+
   it('recusa e-mail ou username repetido', async () => {
     await signUp(ctx, { name: 'bia' });
     const b = new Browser(ctx, '10.9.9.9');
